@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>King Kai Training</title>
+<style>
+:root{--bg:#0b1020;--panel:#141a33;--line:#3a4a8f;--accent:#ffce4a;--accent2:#7be0ff;--text:#eef1ff;--muted:#9aa3c9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);
+background:radial-gradient(circle at 50% -10%,#2a3a7a55,transparent 40%),linear-gradient(160deg,#080b18,#0f1530 60%,#080b18)}
+.wrap{max-width:520px;margin:auto;padding:28px 18px 48px}
+h1{font-size:1.6rem;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 18px;line-height:1.5}
+.panel{border:1px solid var(--line);border-radius:16px;padding:18px;background:#141a33cc;margin-bottom:16px}
+label{display:block;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+select,input[type=range]{width:100%}
+select{min-height:44px;border-radius:10px;border:1px solid var(--line);background:#0d1226;color:var(--text);padding:8px}
+.row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:.8rem;color:var(--accent2)}
+button{width:100%;min-height:50px;border:0;border-radius:12px;background:var(--accent);color:#1a1400;font-weight:800;font-size:1rem;cursor:pointer;margin-top:6px}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+.session{border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;background:#0d1226aa;display:none}
+.session.active{display:block}
+.exname{font-size:1.4rem;font-weight:800;margin:10px 0 6px;color:var(--accent)}
+.exdesc{color:var(--muted);line-height:1.5;margin-bottom:16px}
+.phase{font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2)}
+.timer{font:800 3rem/1 'Courier New',monospace;margin:10px 0}
+.progress{font-size:.85rem;color:var(--muted)}
+.done{display:none;text-align:center;padding:20px;border:1px solid var(--accent);border-radius:16px;background:#1a1a0d55}
+.done.active{display:block}
+</style></head>
+<body><div class="wrap">
+<h1 id="pageTitle">🐝 King Kai Training</h1>
+<p class="sub" id="pageSub">Set your session, then train through each interval as it counts down.</p>
+
+<div class="panel" id="setup">
+  <label for="trainingPath">Choose your training</label>
+  <select id="trainingPath">
+    <option value="kingkai">King Kai — Planet Snake Way</option>
+    <option value="korin">Korin's Tower</option>
+    <option value="kami">Kami's Lookout</option>
+    <option value="yardrat">Yardrat</option>
+    <option value="whis">Whis — Beerus's Planet</option>
+    <option value="beerus">Beerus — God of Destruction</option>
+  </select>
+  <label for="duration" style="margin-top:14px">How many minutes do you want to train?</label>
+  <select id="duration">
+    <option value="1">1 minute</option>
+    <option value="2">2 minutes</option>
+    <option value="3" selected>3 minutes</option>
+    <option value="4">4 minutes</option>
+    <option value="5">5 minutes</option>
+  </select>
+  <label for="intensity" style="margin-top:14px">Intensity: <span id="intensityLabel">5</span> / 10</label>
+  <input type="range" id="intensity" min="1" max="10" value="5">
+  <button id="startBtn">Start Training</button>
+</div>
+
+<div class="session" id="session">
+  <div class="phase" id="phase">EXERCISE 1</div>
+  <div class="exname" id="exname"></div>
+  <div class="exdesc" id="exdesc"></div>
+  <div class="timer" id="timer">00:00</div>
+  <div class="progress" id="progress"></div>
+  <button class="secondary" id="stopBtn">Stop Session</button>
+</div>
+
+<div class="done" id="done">
+  <h2>Great job! 💥</h2>
+  <p>Your King Kai training is complete. Keep practicing to build your energy and skill!</p>
+  <button id="restartBtn">Train Again</button>
+</div>
+
+<script>
+(function(){
+  const paths = {
+    kingkai: {
+      title: "🐝 King Kai Training",
+      sub: "Set your session, then train through each interval as it counts down.",
+      exercises: [
+        ["Bumblebee Catch", "Move quickly side to side, dodging imaginary bumblebees for agility."],
+        ["Gregory Dodge", "Move around slowly, practicing quick direction changes to dodge Gregory."],
+        ["King Kai Push-ups", "Do controlled push-ups to build strength and endurance."],
+        ["Energy Focus Breathing", "Practice deep breathing, focusing your energy to calm your mind."],
+        ["Speed Jumps", "Jump in place quickly and repeatedly to build explosive power."],
+        ["Balance Pose", "Stand on one foot, switch feet, to improve balance and focus."]
+      ]
+    },
+    korin: {
+      title: "🐱 Korin's Tower Training",
+      sub: "Climb the tower's discipline — balance, patience, and controlled strength.",
+      exercises: [
+        ["Tower Step Balance", "Walk heel-to-toe in a straight line, arms out, focusing on each footfall."],
+        ["Water Carry", "Hold two full cups of water and move slowly without spilling a drop."],
+        ["Cat's Patience Hold", "Hold a low squat position steadily, breathing slowly throughout."],
+        ["Senzu Sprint", "Short, quick bursts of stepping in place, then fully relax and reset."],
+        ["Single-Paw Balance", "Balance on one foot with eyes closed for as long as is safe, switch sides."]
+      ]
+    },
+    kami: {
+      title: "⛩️ Kami's Lookout Training",
+      sub: "Calm, elevated focus — precision movement and mental clarity above the clouds.",
+      exercises: [
+        ["Lookout Stillness", "Stand tall and still, focusing on slow, deep breaths for the interval."],
+        ["Guardian's Stretch", "Move through a slow, controlled full-body stretch sequence."],
+        ["Mr. Popo's Precision Steps", "Walk a marked line slowly and precisely, correcting your posture each step."],
+        ["Spirit Push-ups", "Controlled push-ups, pausing briefly at the bottom of each rep."],
+        ["Sacred Water Pour", "Slowly pour water between two cups without looking away from a fixed point."]
+      ]
+    },
+    yardrat: {
+      title: "🛸 Yardrat Training",
+      sub: "Focus on quick footwork and instant redirection, inspired by teleportation technique.",
+      exercises: [
+        ["Instant Step", "Take a sharp step in one direction, then instantly reverse direction."],
+        ["Teleport Drill", "Move quickly to a nearby spot, freeze for a second, then move to another."],
+        ["Energy Read Breathing", "Slow, deep breathing while standing still, sensing your surroundings."],
+        ["Four-Corner Shuffle", "Quickly shuffle between four imaginary points in a small square pattern."],
+        ["Recovery Stretch", "Gentle full-body stretch to recover between bursts of movement."]
+      ]
+    },
+    whis: {
+      title: "🪽 Whis's Training",
+      sub: "Elegant, controlled movement — precision and grace over raw effort.",
+      exercises: [
+        ["Time Reverse Walk", "Walk forward slowly, then retrace your exact steps backward with control."],
+        ["Staff Balance", "Hold a broom or stick horizontally, balancing it while walking slowly."],
+        ["Graceful Pivot", "Practice smooth 180-degree turns, keeping your posture upright and light."],
+        ["Attendant's Breath", "Slow, elegant breathing pattern: 4 counts in, hold 4, out 4."],
+        ["Perfect Stillness", "Stand perfectly still and balanced for the full interval, unmoving."]
+      ]
+    },
+    beerus: {
+      title: "💥 Beerus Training",
+      sub: "High intensity, short bursts — train like a God of Destruction, then rest like one too.",
+      exercises: [
+        ["Destroyer Sprint", "All-out fast stepping or jogging in place for the full interval."],
+        ["Judgment Push-ups", "Fast-paced push-ups, going as quickly as good form allows."],
+        ["Power Surge Jumps", "Explosive jumping in place, driving knees up high."],
+        ["Divine Patience Rest", "Lie or sit completely still and relaxed — recovery is part of the training."],
+        ["Final Form Sprint", "One last burst of maximum-effort movement before the session ends."]
+      ]
+    }
+  };
+
+  const $ = id => document.getElementById(id);
+  const trainingPathEl = $('trainingPath'), pageTitle = $('pageTitle'), pageSub = $('pageSub');
+  let exercises = paths.kingkai.exercises;
+
+  function applyPath(){
+    const p = paths[trainingPathEl.value];
+    exercises = p.exercises;
+    pageTitle.textContent = p.title;
+    pageSub.textContent = p.sub;
+  }
+  trainingPathEl.addEventListener('change', applyPath);
+  const durationEl = $('duration'), intensityEl = $('intensity'), intensityLabel = $('intensityLabel');
+  const startBtn = $('startBtn'), stopBtn = $('stopBtn'), restartBtn = $('restartBtn');
+  const setup = $('setup'), session = $('session'), done = $('done');
+  const phaseEl = $('phase'), exnameEl = $('exname'), exdescEl = $('exdesc'), timerEl = $('timer'), progressEl = $('progress');
+
+  intensityEl.addEventListener('input', ()=> intensityLabel.textContent = intensityEl.value);
+
+  let timerHandle = null;
+
+  function pickExercises(intensity){
+    // Low intensity: fewer, gentler exercises (first half of the list).
+    // Moderate: a middle-weighted subset. High: the full list.
+    const n = exercises.length;
+    if (intensity <= 3){
+      const count = Math.max(2, Math.ceil(n/2));
+      return exercises.slice(0, count);
+    }
+    if (intensity <= 7){
+      const count = Math.max(3, Math.ceil(n*0.7));
+      // take every-other-ish spread for variety
+      const picked = [];
+      for (let i=0; i<n && picked.length<count; i+=2) picked.push(exercises[i]);
+      for (let i=1; i<n && picked.length<count; i+=2) picked.push(exercises[i]);
+      return picked.slice(0,count);
+    }
+    return exercises;
+  }
+
+  function fmt(sec){
+    const m = String(Math.floor(sec/60)).padStart(2,'0');
+    const s = String(sec%60).padStart(2,'0');
+    return `${m}:${s}`;
+  }
+
+  function countdown(seconds, onTick, onDone){
+    let remaining = seconds;
+    onTick(remaining);
+    timerHandle = setInterval(()=>{
+      remaining--;
+      onTick(remaining);
+      if (remaining <= 0){
+        clearInterval(timerHandle);
+        onDone();
+      }
+    }, 1000);
+  }
+
+  function stopAll(){
+    if (timerHandle) clearInterval(timerHandle);
+    session.classList.remove('active');
+    done.classList.remove('active');
+    setup.style.display = 'block';
+  }
+
+  stopBtn.addEventListener('click', stopAll);
+  restartBtn.addEventListener('click', stopAll);
+
+  startBtn.addEventListener('click', ()=>{
+    applyPath();
+    const duration = parseInt(durationEl.value,10);
+    const intensity = parseInt(intensityEl.value,10);
+    const chosen = pickExercises(intensity);
+    const intervals = chosen.length;
+    const baseInterval = Math.floor((duration*60)/intervals);
+    const workTime = Math.max(5, baseInterval - intensity);
+    const restTime = Math.max(2, 10 - intensity);
+
+    setup.style.display = 'none';
+    session.classList.add('active');
+    done.classList.remove('active');
+
+    let i = 0;
+    function runExercise(){
+      if (i >= chosen.length){
+        session.classList.remove('active');
+        done.classList.add('active');
+        return;
+      }
+      const [name, desc] = chosen[i];
+      phaseEl.textContent = `EXERCISE ${i+1} OF ${chosen.length} · WORK`;
+      exnameEl.textContent = name;
+      exdescEl.textContent = desc;
+      progressEl.textContent = `${workTime}s work · ${restTime}s rest between exercises`;
+      countdown(workTime, s => timerEl.textContent = fmt(s), ()=>{
+        i++;
+        if (i < chosen.length){
+          phaseEl.textContent = 'REST';
+          exnameEl.textContent = 'Rest';
+          exdescEl.textContent = 'Catch your breath, get ready for the next one.';
+          countdown(restTime, s => timerEl.textContent = fmt(s), runExercise);
+        } else {
+          runExercise();
+        }
+      });
+    }
+    runExercise();
+  });
+})();
+</script>
+</div></body></html>
