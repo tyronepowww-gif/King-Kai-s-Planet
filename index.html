@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>King Kai Training</title>
+<style>
+:root{--bg:#0b1020;--panel:#141a33;--line:#3a4a8f;--accent:#ffce4a;--accent2:#7be0ff;--text:#eef1ff;--muted:#9aa3c9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);
+background:radial-gradient(circle at 50% -10%,#2a3a7a55,transparent 40%),linear-gradient(160deg,#080b18,#0f1530 60%,#080b18)}
+.wrap{max-width:520px;margin:auto;padding:28px 18px 48px}
+h1{font-size:1.6rem;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 18px;line-height:1.5}
+.panel{border:1px solid var(--line);border-radius:16px;padding:18px;background:#141a33cc;margin-bottom:16px}
+label{display:block;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+select,input[type=range]{width:100%}
+select{min-height:44px;border-radius:10px;border:1px solid var(--line);background:#0d1226;color:var(--text);padding:8px}
+.row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:.8rem;color:var(--accent2)}
+button{width:100%;min-height:50px;border:0;border-radius:12px;background:var(--accent);color:#1a1400;font-weight:800;font-size:1rem;cursor:pointer;margin-top:6px}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+.session{border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;background:#0d1226aa;display:none}
+.session.active{display:block}
+.exname{font-size:1.4rem;font-weight:800;margin:10px 0 6px;color:var(--accent)}
+.exdesc{color:var(--muted);line-height:1.5;margin-bottom:16px}
+.phase{font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2)}
+.timer{font:800 3rem/1 'Courier New',monospace;margin:10px 0}
+.progress{font-size:.85rem;color:var(--muted)}
+.done{display:none;text-align:center;padding:20px;border:1px solid var(--accent);border-radius:16px;background:#1a1a0d55}
+.done.active{display:block}
+</style></head>
+<body><div class="wrap">
+<h1>🐝 King Kai Training</h1>
+<p class="sub">Set your session, then train through each interval as it counts down.</p>
+
+<div class="panel" id="setup">
+  <label for="duration">How many minutes do you want to train?</label>
+  <select id="duration">
+    <option value="1">1 minute</option>
+    <option value="2">2 minutes</option>
+    <option value="3" selected>3 minutes</option>
+    <option value="4">4 minutes</option>
+    <option value="5">5 minutes</option>
+  </select>
+  <label for="intensity" style="margin-top:14px">Intensity: <span id="intensityLabel">5</span> / 10</label>
+  <input type="range" id="intensity" min="1" max="10" value="5">
+  <button id="startBtn">Start Training</button>
+</div>
+
+<div class="session" id="session">
+  <div class="phase" id="phase">EXERCISE 1</div>
+  <div class="exname" id="exname"></div>
+  <div class="exdesc" id="exdesc"></div>
+  <div class="timer" id="timer">00:00</div>
+  <div class="progress" id="progress"></div>
+  <button class="secondary" id="stopBtn">Stop Session</button>
+</div>
+
+<div class="done" id="done">
+  <h2>Great job! 💥</h2>
+  <p>Your King Kai training is complete. Keep practicing to build your energy and skill!</p>
+  <button id="restartBtn">Train Again</button>
+</div>
+
+<script>
+(function(){
+  const exercises = [
+    ["Bumblebee Catch", "Try to move quickly side to side, dodging imaginary bumblebees for agility."],
+    ["Gregory Dodge", "Move around slowly, practicing quick direction changes to dodge Gregory."],
+    ["King Kai Push-ups", "Do controlled push-ups to build strength and endurance."],
+    ["Energy Focus Breathing", "Practice deep breathing, focusing your energy to calm your mind."],
+    ["Speed Jumps", "Jump in place quickly and repeatedly to build explosive power."],
+    ["Balance Pose", "Stand on one foot, switch feet, to improve balance and focus."]
+  ];
+
+  const $ = id => document.getElementById(id);
+  const durationEl = $('duration'), intensityEl = $('intensity'), intensityLabel = $('intensityLabel');
+  const startBtn = $('startBtn'), stopBtn = $('stopBtn'), restartBtn = $('restartBtn');
+  const setup = $('setup'), session = $('session'), done = $('done');
+  const phaseEl = $('phase'), exnameEl = $('exname'), exdescEl = $('exdesc'), timerEl = $('timer'), progressEl = $('progress');
+
+  intensityEl.addEventListener('input', ()=> intensityLabel.textContent = intensityEl.value);
+
+  let timerHandle = null;
+
+  function pickExercises(intensity){
+    if (intensity <= 3) return [exercises[1], exercises[3], exercises[5]];
+    if (intensity <= 7) return [exercises[0], exercises[2], exercises[4]];
+    return exercises;
+  }
+
+  function fmt(sec){
+    const m = String(Math.floor(sec/60)).padStart(2,'0');
+    const s = String(sec%60).padStart(2,'0');
+    return `${m}:${s}`;
+  }
+
+  function countdown(seconds, onTick, onDone){
+    let remaining = seconds;
+    onTick(remaining);
+    timerHandle = setInterval(()=>{
+      remaining--;
+      onTick(remaining);
+      if (remaining <= 0){
+        clearInterval(timerHandle);
+        onDone();
+      }
+    }, 1000);
+  }
+
+  function stopAll(){
+    if (timerHandle) clearInterval(timerHandle);
+    session.classList.remove('active');
+    done.classList.remove('active');
+    setup.style.display = 'block';
+  }
+
+  stopBtn.addEventListener('click', stopAll);
+  restartBtn.addEventListener('click', stopAll);
+
+  startBtn.addEventListener('click', ()=>{
+    const duration = parseInt(durationEl.value,10);
+    const intensity = parseInt(intensityEl.value,10);
+    const chosen = pickExercises(intensity);
+    const intervals = chosen.length;
+    const baseInterval = Math.floor((duration*60)/intervals);
+    const workTime = Math.max(5, baseInterval - intensity);
+    const restTime = Math.max(2, 10 - intensity);
+
+    setup.style.display = 'none';
+    session.classList.add('active');
+    done.classList.remove('active');
+
+    let i = 0;
+    function runExercise(){
+      if (i >= chosen.length){
+        session.classList.remove('active');
+        done.classList.add('active');
+        return;
+      }
+      const [name, desc] = chosen[i];
+      phaseEl.textContent = `EXERCISE ${i+1} OF ${chosen.length} · WORK`;
+      exnameEl.textContent = name;
+      exdescEl.textContent = desc;
+      progressEl.textContent = `${workTime}s work · ${restTime}s rest between exercises`;
+      countdown(workTime, s => timerEl.textContent = fmt(s), ()=>{
+        i++;
+        if (i < chosen.length){
+          phaseEl.textContent = 'REST';
+          exnameEl.textContent = 'Rest';
+          exdescEl.textContent = 'Catch your breath, get ready for the next one.';
+          countdown(restTime, s => timerEl.textContent = fmt(s), runExercise);
+        } else {
+          runExercise();
+        }
+      });
+    }
+    runExercise();
+  });
+})();
+</script>
+</div></body></html>
