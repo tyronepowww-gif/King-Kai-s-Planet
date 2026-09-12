@@ -13,6 +13,32 @@
   <title>Z Console</title>
 
   <style>
+  .app-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.app-links a {
+  padding: 8px 11px;
+  border: 1px solid rgba(114, 255, 175, 0.55);
+  border-radius: 999px;
+  color: #72ffaf;
+  background: rgba(6, 19, 15, 0.82);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.app-links a:hover,
+.app-links a:focus-visible {
+  outline: 3px solid #ffe878;
+  outline-offset: 3px;
+  color: #06100b;
+  background: #d0ff68;
+}
+  <style>
     :root {
       --bg: #0b1020;
       --panel: #141a33;
