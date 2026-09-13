@@ -1,44 +1,1169 @@
-Z-SUITE · PICK A CONSOLE
-Z-ORBIT
-Z CONSOLE
-Z-SCOUTER
-Z Orbit
-Pick a path, pick a time, and move at whatever pace works for your body today.
-Made to work for every body
-Z Orbit is a free, independent movement and reflection tool — it's not medical advice, a diagnosis, a treatment plan, or a replacement for a doctor, physical therapist, or other qualified professional.
-There's no such thing as "not enough range of motion" here. Every move below can be done seated, lying down, one side at a time, in the smallest range that's comfortable, or just imagined and breathed through if that's what today calls for. If you're managing limited mobility, recovering from something, or spending most of your day in bed, this still works — you're not required to match a "full" version of anything. Small and real beats big and forced, every time.
-Pick whatever variation fits you right now, keep clear space if you're moving, and stop if anything feels painful, dizzying, or unsafe.
-Pick a path
-        Foundation — steady basics
-        Balance — footing and patience
-        Precision — slow and focused
-        Footwork — controlled steps
-        Control — turns and posture
-        Challenge — a bit more energy
-      
-How much time do you have?
-        1 minute
-        2 minutes
-        3 minutes
-        4 minutes
-        5 minutes
-      
-How much do you want packed in? 5 / 10
-TOTAL TIME SO FAR
-0h 0m
-SESSIONS DONE
-0
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta
+    name="description"
+    content="Z Orbit is a free, local-first practice timer for movement, reflection, and deliberate practice — built to work for every body and every range of motion."
+  >
+  <title>Z Orbit</title>
 
-I'll do whatever version of this fits my body today — smaller range, seated, lying down, or just breathing through it — and I'll stop if anything feels painful, dizzying, or unsafe.
-Let's go Clear my saved progress
-The idea behind this
-Z Orbit treats practice as something you do for yourself, on your own terms — not a test, not a competition. The goal is steadiness and a few more good choices in how you move through your day, not proving anything to anyone.
-Doing less on a hard day isn't giving up — it's just accurate. Control beats force, and rest is part of the practice, not a break from it.
-Why "range" isn't the point
-Finished sessions add to your own private time total. That total isn't a ranking or proof of anything — it's just a record that you showed up, in whatever way worked that day.
-The "how much do you want packed in" setting changes how many moves get pulled into a session — it's a game setting, not a measurement of your body or your effort.
-Creative Note
-Z Orbit is a free, independent personal project exploring movement, reflection, discipline, and growth through interactive design.
-Its creator was influenced by stories about training, mentorship, persistence, recovery, and imaginative self-improvement. Dragon Ball was one work that made those themes emotionally meaningful to the creator.
-Z Orbit uses original code, writing, design, and project content. It is not affiliated with, endorsed by, sponsored by, or approved by Dragon Ball, Shueisha, Bird Studio, Toei Animation, or any related rights holder.
-Z Orbit stores your total time and session count only in this browser using local storage. No accounts, camera, microphone, uploads, analytics, advertising, or remote data processing — just this page, in this tab.
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #141a33;
+      --line: #3a4a8f;
+      --accent: #ffce4a;
+      --accent2: #7be0ff;
+      --text: #eef1ff;
+      --muted: #9aa3c9;
+      --safe-bg: #101d38;
+      --safe-line: #4d80c5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% -10%, #2a3a7a55, transparent 40%),
+        linear-gradient(160deg, #080b18, #0f1530 60%, #080b18);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    .wrap {
+      max-width: 540px;
+      margin: auto;
+      padding: 28px 18px 48px;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 1.7rem;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .panel {
+      margin-bottom: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #141a33cc;
+    }
+
+    .notice {
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--safe-line);
+      border-left: 4px solid var(--accent2);
+      border-radius: 14px;
+      background: var(--safe-bg);
+      color: #dcecff;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .notice h2 {
+      margin: 0 0 7px;
+      color: var(--accent2);
+      font-size: 0.98rem;
+    }
+
+    .notice p {
+      margin: 8px 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    select,
+    input[type="range"] {
+      width: 100%;
+    }
+
+    select {
+      min-height: 44px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0d1226;
+      color: var(--text);
+    }
+
+    input[type="range"] {
+      accent-color: var(--accent);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--accent2);
+      font-size: 0.8rem;
+    }
+
+    .practice-summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 4px;
+    }
+
+    .practice-stat {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0d1226aa;
+    }
+
+    .practice-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .practice-stat strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--accent);
+      font-size: 1.08rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0d1226aa;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .check-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    button {
+      width: 100%;
+      min-height: 50px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #1a1400;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    button.secondary {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+    }
+
+    .session {
+      display: none;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #0d1226aa;
+      text-align: center;
+    }
+
+    .session.active {
+      display: block;
+    }
+
+    .phase {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .exname {
+      margin: 10px 0 6px;
+      color: var(--accent);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .exdesc {
+      margin-bottom: 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .timer {
+      margin: 10px 0;
+      font: 800 3rem/1 "Courier New", monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .session-note {
+      margin-top: 16px;
+      padding: 10px;
+      border: 1px solid #665620;
+      border-radius: 10px;
+      background: #211b0b;
+      color: #ffe8a5;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .done {
+      display: none;
+      padding: 20px;
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      background: #1a1a0d55;
+      text-align: center;
+    }
+
+    .done.active {
+      display: block;
+    }
+
+    .done h2 {
+      color: var(--accent);
+    }
+
+    .learning {
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #141a33cc;
+    }
+
+    .learning h2 {
+      margin: 0 0 8px;
+      color: var(--accent2);
+      font-size: 1rem;
+    }
+
+    .learning p {
+      margin: 8px 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .glossary dt {
+      margin-top: 10px;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .glossary dd {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .creative-note {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .creative-note h2 {
+      margin: 0 0 8px;
+      color: var(--accent2);
+      font-size: 0.94rem;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @media (max-width: 390px) {
+      .practice-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* --- Game Boy style nav (visual only — links/hrefs unchanged) --- */
+    .gb-shell {
+      margin: 0 0 16px;
+      padding: 14px 14px 16px;
+      border-radius: 18px 18px 26px 26px;
+      background: linear-gradient(180deg, #d7d3c9, #b9b4a6);
+      border: 2px solid #8d8a7d;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.5),
+        0 4px 10px rgba(0,0,0,.35);
+    }
+
+    .gb-screen {
+      margin-bottom: 12px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: #9bab6f;
+      border: 3px solid #4a4a42;
+      box-shadow: inset 0 0 0 2px #7c8a55;
+      color: #1f2a12;
+      font-family: "Courier New", monospace;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .gb-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .gb-buttons a {
+      flex: 1 1 auto;
+      min-width: 84px;
+      padding: 10px 8px;
+      border-radius: 999px;
+      border: 2px solid #6b2740;
+      background: linear-gradient(180deg, #b6425f, #8a1f3c);
+      color: #ffe3ea;
+      font-family: "Courier New", monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.35),
+        0 2px 0 #4a1526;
+    }
+
+    .gb-buttons a:hover,
+    .gb-buttons a:focus-visible {
+      outline: 3px solid #ffe878;
+      outline-offset: 2px;
+      background: linear-gradient(180deg, #cf5573, #a52649);
+    }
+
+    .gb-buttons a.current {
+      background: linear-gradient(180deg, #4a4a42, #2e2e28);
+      border-color: #1f1f1a;
+      color: #d7d3c9;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <nav class="gb-shell" aria-label="Project navigation">
+      <div class="gb-screen">Z-Suite &middot; pick a console</div>
+      <div class="gb-buttons">
+        <a href="https://tyronepowww-gif.github.io/Z-Orbit/" class="current">Z-Orbit</a>
+        <a href="https://tyronepowww-gif.github.io/Z-Console/">Z Console</a>
+        <a href="https://tyronepowww-gif.github.io/Console-Scouter/">Z-Scouter</a>
+      </div>
+    </nav>
+
+    <h1 id="pageTitle">Z Orbit</h1>
+    <p class="sub" id="pageSub">
+      Pick a path, pick a time, and move at whatever pace works for your body today.
+    </p>
+
+    <section class="notice" role="note" aria-label="Wellness and fictional interface notice">
+      <h2>Made to work for every body</h2>
+
+      <p>
+        Z Orbit is a free, independent movement and reflection tool — it's not
+        medical advice, a diagnosis, a treatment plan, or a replacement for a
+        doctor, physical therapist, or other qualified professional.
+      </p>
+
+      <p>
+        <strong>There's no such thing as "not enough range of motion" here.</strong>
+        Every move below can be done seated, lying down, one side at a time, in
+        the smallest range that's comfortable, or just imagined and breathed
+        through if that's what today calls for. If you're managing limited
+        mobility, recovering from something, or spending most of your day in
+        bed, this still works — you're not required to match a "full" version
+        of anything. Small and real beats big and forced, every time.
+      </p>
+
+      <p>
+        Pick whatever variation fits you right now, keep clear space if you're
+        moving, and stop if anything feels painful, dizzying, or unsafe.
+      </p>
+    </section>
+
+    <section class="panel" id="setup" aria-label="Practice setup">
+      <label for="trainingPath">Pick a path</label>
+
+      <select id="trainingPath">
+        <option value="foundation">Foundation — steady basics</option>
+        <option value="balance">Balance — footing and patience</option>
+        <option value="precision">Precision — slow and focused</option>
+        <option value="footwork">Footwork — controlled steps</option>
+        <option value="control">Control — turns and posture</option>
+        <option value="challenge">Challenge — a bit more energy</option>
+      </select>
+
+      <label for="duration" style="margin-top: 14px">
+        How much time do you have?
+      </label>
+
+      <select id="duration">
+        <option value="1">1 minute</option>
+        <option value="2">2 minutes</option>
+        <option value="3" selected>3 minutes</option>
+        <option value="4">4 minutes</option>
+        <option value="5">5 minutes</option>
+      </select>
+
+      <label for="intensity" style="margin-top: 14px">
+        How much do you want packed in? <span id="intensityLabel">5</span> / 10
+      </label>
+
+      <input id="intensity" type="range" min="1" max="10" value="5">
+
+      <div class="practice-summary" aria-label="Local deliberate practice summary">
+        <div class="practice-stat">
+          <span>Total time so far</span>
+          <strong id="totalPracticeTime">0h 0m</strong>
+        </div>
+
+        <div class="practice-stat">
+          <span>Sessions done</span>
+          <strong id="completedSessions">0</strong>
+        </div>
+      </div>
+
+      <label class="check-row" for="safetyCheck">
+        <input id="safetyCheck" type="checkbox">
+
+        <span>
+          I'll do whatever version of this fits my body today — smaller range,
+          seated, lying down, or just breathing through it — and I'll stop if
+          anything feels painful, dizzying, or unsafe.
+        </span>
+      </label>
+
+      <button id="startBtn" type="button" disabled>
+        Let's go
+      </button>
+
+      <button id="resetPracticeBtn" class="secondary" type="button">
+        Clear my saved progress
+      </button>
+    </section>
+
+    <section class="session" id="session" aria-live="polite">
+      <div class="phase" id="phase">Exercise 1</div>
+      <div class="exname" id="exname"></div>
+      <div class="exdesc" id="exdesc"></div>
+      <div class="timer" id="timer">00:00</div>
+      <div class="progress" id="progress"></div>
+
+      <div class="session-note">
+        This is just a game, not a medical or performance measurement. Slow
+        it down, shrink the range, stay seated or lying down, use support, or
+        stop — whatever keeps this feeling okay for you right now.
+      </div>
+
+      <button id="stopBtn" class="secondary" type="button">
+        Stop for now
+      </button>
+    </section>
+
+    <section class="done" id="done" aria-live="polite">
+      <h2>Nice work ◆</h2>
+
+      <p>
+        That time is saved to your own private record on this device.
+        Resting counts too — showing up however you could today is the whole
+        point.
+      </p>
+
+      <button id="restartBtn" type="button">
+        Go again
+      </button>
+    </section>
+
+    <section class="learning">
+      <h2>The idea behind this</h2>
+
+      <p>
+        Z Orbit treats practice as something you do for yourself, on your own
+        terms — not a test, not a competition. The goal is steadiness and a
+        few more good choices in how you move through your day, not proving
+        anything to anyone.
+      </p>
+
+      <p>
+        Doing less on a hard day isn't giving up — it's just accurate. Control
+        beats force, and rest is part of the practice, not a break from it.
+      </p>
+    </section>
+
+    <section class="learning">
+      <h2>Why "range" isn't the point</h2>
+
+      <p>
+        Finished sessions add to your own private time total. That total
+        isn't a ranking or proof of anything — it's just a record that you
+        showed up, in whatever way worked that day.
+      </p>
+
+      <p>
+        The "how much do you want packed in" setting changes how many moves
+        get pulled into a session — it's a game setting, not a measurement of
+        your body or your effort.
+      </p>
+    </section>
+
+    <section class="creative-note">
+      <h2>Creative Note</h2>
+
+      <p>
+        Z Orbit is a free, independent personal project exploring movement,
+        reflection, discipline, and growth through interactive design.
+      </p>
+
+      <p>
+        Its creator was influenced by stories about training, mentorship,
+        persistence, recovery, and imaginative self-improvement. Dragon Ball was
+        one work that made those themes emotionally meaningful to the creator.
+      </p>
+
+      <p>
+        Z Orbit uses original code, writing, design, and project content. It is
+        not affiliated with, endorsed by, sponsored by, or approved by Dragon Ball,
+        Shueisha, Bird Studio, Toei Animation, or any related rights holder.
+      </p>
+    </section>
+
+    <p class="footer-note">
+      Z Orbit stores your total time and session count only in this browser
+      using local storage. No accounts, camera, microphone, uploads,
+      analytics, advertising, or remote data processing — just this page, in
+      this tab.
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const PRACTICE_STORAGE_KEY = "z_console_practice_timer_v1";
+
+      const paths = {
+        foundation: {
+          title: "Z Orbit — Foundation Path",
+          sub: "Build a steady base with controlled movement, breathing, and simple practice.",
+          exercises: [
+            [
+              "Lateral Awareness",
+              "Take comfortable side steps in a clear area. Keep your knees soft and your movement quiet. Seated or lying down: gently shift weight or slide a leg side to side within a comfortable range."
+            ],
+            [
+              "Direction Reset",
+              "Walk slowly in different directions using small, stable turns. Seated or lying down: turn your head and shoulders gently to face a few different directions."
+            ],
+            [
+              "Strength Choice",
+              "Choose wall, incline, knee, or standard push-ups at a pace you can control. Lying down or limited mobility: press your palms together or push gently against a surface within reach."
+            ],
+            [
+              "Reset Breathing",
+              "Stand or sit comfortably and take slow, relaxed breaths. This one works exactly the same lying down."
+            ],
+            [
+              "Rhythm Steps",
+              "March in place at a pace that lets you stay relaxed and steady. Seated or lying down: tap feet or fingers in a steady, comfortable rhythm."
+            ],
+            [
+              "Supported Balance",
+              "Stand near a wall or chair. Balance only as long as you feel stable, then switch sides. Seated or lying down: simply notice your weight settling evenly, then switch your attention side to side."
+            ]
+          ]
+        },
+
+        balance: {
+          title: "Z Orbit — Balance Path",
+          sub: "Practice steady footing, patience, and controlled transitions.",
+          exercises: [
+            [
+              "Line Walk",
+              "Walk heel-to-toe along a clear path. Keep a stable support nearby if useful. Seated or lying down: slide one heel toward the other foot's toes and back, slowly."
+            ],
+            [
+              "Careful Carry",
+              "Carry two light, non-breakable objects slowly and steadily. Keep the area dry and clear. Seated or lying down: hold one light object steady in each hand for the interval."
+            ],
+            [
+              "Comfortable Squat Hold",
+              "Use a shallow squat or sit-to-stand hold only within a comfortable range. Limited mobility: gently press your feet into the floor or bed and hold."
+            ],
+            [
+              "Reset March",
+              "Use short controlled marching steps, then pause and relax. Seated or lying down: lift knees gently one at a time, then rest."
+            ],
+            [
+              "Supported Single-Leg Balance",
+              "Balance beside a stable chair, counter, or wall with both eyes open. Switch sides. Seated or lying down: lift one foot slightly off the ground or bed, hold, then switch."
+            ]
+          ]
+        },
+
+        precision: {
+          title: "Z Orbit — Precision Path",
+          sub: "Use calm attention, posture awareness, and deliberate movement.",
+          exercises: [
+            [
+              "Quiet Stillness",
+              "Stand or sit tall and take slow breaths throughout the interval. Works exactly the same lying down."
+            ],
+            [
+              "Comfortable Stretch",
+              "Move gently through a full-body stretch without forcing range of motion. Any position: stretch only the parts that are comfortable to reach today."
+            ],
+            [
+              "Precision Steps",
+              "Walk a clear line slowly, using small steps and relaxed posture. Seated or lying down: trace a slow, careful line with one finger or foot instead."
+            ],
+            [
+              "Controlled Press",
+              "Choose a push-up variation that allows steady, comfortable movement. Limited mobility: press your hands slowly together and release."
+            ],
+            [
+              "Focused Carry",
+              "Move a light, safe object across a stable surface with smooth attention. Seated or lying down: slide a light object slowly across your lap or a tray."
+            ]
+          ]
+        },
+
+        footwork: {
+          title: "Z Orbit — Footwork Path",
+          sub: "Explore controlled repositioning, stable turns, and responsive steps.",
+          exercises: [
+            [
+              "Step and Return",
+              "Take a controlled step in one direction, pause, and return without rushing. Seated or lying down: slide one foot outward and back."
+            ],
+            [
+              "Marker Walk",
+              "Walk between two nearby markers at a pace you can control. Seated or lying down: shift your gaze slowly between two points instead."
+            ],
+            [
+              "Awareness Breathing",
+              "Stand or sit comfortably and use slow, steady breathing. Works exactly the same lying down."
+            ],
+            [
+              "Four-Point Walk",
+              "Walk between four nearby points in a small clear pattern. Avoid sharp pivots. Seated or lying down: look toward four points around you, one at a time."
+            ],
+            [
+              "Recovery Stretch",
+              "Use gentle, comfortable stretching and relaxed breathing. Any position: whatever gentle stretch feels good right now."
+            ]
+          ]
+        },
+
+        control: {
+          title: "Z Orbit — Control Path",
+          sub: "Use balance, posture, and measured changes of direction.",
+          exercises: [
+            [
+              "Retrace Walk",
+              "Walk forward slowly, then retrace your steps only if the area is clear and you feel stable. Seated or lying down: mentally retrace a familiar short walk, breathing slowly."
+            ],
+            [
+              "Light Object Balance",
+              "Balance a light, safe object while standing or walking slowly. Avoid anything heavy or breakable. Seated or lying down: balance it on your lap or chest instead."
+            ],
+            [
+              "Smooth Turn",
+              "Practice slow turns using small, stable steps and upright posture. Seated or lying down: turn your head and upper body gently, one direction at a time."
+            ],
+            [
+              "Measured Breath",
+              "Breathe gently: inhale comfortably, pause only if comfortable, and exhale slowly. Works exactly the same in any position."
+            ],
+            [
+              "Comfortable Stillness",
+              "Stand or sit relaxed and balanced for the interval. Lying down works exactly the same."
+            ]
+          ]
+        },
+
+        challenge: {
+          title: "Z Orbit — Challenge Path",
+          sub: "Choose energetic intervals while keeping full permission to slow down or use a lower-impact option.",
+          exercises: [
+            [
+              "Brisk March",
+              "March or step in place at a controllable pace. Reduce speed whenever needed. Seated or lying down: pump your arms or tap your feet at a pace that feels lively for you."
+            ],
+            [
+              "Strength Variation",
+              "Choose wall, incline, knee, or standard push-ups with steady form and breathing. Limited mobility: press palms together firmly and release, repeatedly."
+            ],
+            [
+              "Power Steps",
+              "Choose marching, gentle step-ups on a secure low surface, or small comfortable hops if appropriate for you. Seated or lying down: quick gentle taps of feet or hands instead."
+            ],
+            [
+              "Recovery Phase",
+              "Sit or stand comfortably, relax your shoulders, and breathe at an easy pace. Works exactly the same lying down."
+            ],
+            [
+              "Steady Finish",
+              "End with controlled movement at a pace you could repeat another day. Any position: whatever felt good enough to want to do again tomorrow."
+            ]
+          ]
+        }
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      const trainingPathEl = $("trainingPath");
+      const durationEl = $("duration");
+      const intensityEl = $("intensity");
+      const intensityLabel = $("intensityLabel");
+
+      const pageTitle = $("pageTitle");
+      const pageSub = $("pageSub");
+
+      const safetyCheck = $("safetyCheck");
+      const startBtn = $("startBtn");
+      const stopBtn = $("stopBtn");
+      const restartBtn = $("restartBtn");
+      const resetPracticeBtn = $("resetPracticeBtn");
+
+      const setup = $("setup");
+      const session = $("session");
+      const done = $("done");
+
+      const phaseEl = $("phase");
+      const exnameEl = $("exname");
+      const exdescEl = $("exdesc");
+      const timerEl = $("timer");
+      const progressEl = $("progress");
+
+      const totalPracticeTimeEl = $("totalPracticeTime");
+      const completedSessionsEl = $("completedSessions");
+
+      let exercises = paths.foundation.exercises;
+      let timerHandle = null;
+      let sessionRunning = false;
+      let activeRunId = 0;
+
+      function readPracticeRecord() {
+        const fallback = {
+          totalSeconds: 0,
+          completedSessions: 0
+        };
+
+        try {
+          const raw = localStorage.getItem(PRACTICE_STORAGE_KEY);
+
+          if (!raw) {
+            return fallback;
+          }
+
+          const saved = JSON.parse(raw);
+
+          return {
+            totalSeconds: Number(saved.totalSeconds) || 0,
+            completedSessions: Number(saved.completedSessions) || 0
+          };
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function savePracticeRecord(record) {
+        try {
+          localStorage.setItem(
+            PRACTICE_STORAGE_KEY,
+            JSON.stringify(record)
+          );
+        } catch (error) {
+          /* The timer still works if browser storage is unavailable. */
+        }
+      }
+
+      function formatPracticeTime(totalSeconds) {
+        const seconds = Math.max(0, Math.floor(totalSeconds));
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+
+        return `${hours}h ${minutes}m`;
+      }
+
+      function renderPracticeRecord() {
+        const record = readPracticeRecord();
+
+        totalPracticeTimeEl.textContent =
+          formatPracticeTime(record.totalSeconds);
+
+        completedSessionsEl.textContent =
+          String(record.completedSessions);
+      }
+
+      function addCompletedPractice(seconds) {
+        const completedSeconds = Math.max(0, Math.floor(seconds));
+
+        if (completedSeconds < 1) {
+          return;
+        }
+
+        const record = readPracticeRecord();
+
+        record.totalSeconds += completedSeconds;
+        record.completedSessions += 1;
+
+        savePracticeRecord(record);
+        renderPracticeRecord();
+      }
+
+      function applyPath() {
+        const path = paths[trainingPathEl.value];
+
+        exercises = path.exercises;
+        pageTitle.textContent = path.title;
+        pageSub.textContent = path.sub;
+      }
+
+      function updateStartButton() {
+        startBtn.disabled = !safetyCheck.checked || sessionRunning;
+      }
+
+      function pickExercises(intensity) {
+        const total = exercises.length;
+
+        if (intensity <= 3) {
+          const count = Math.max(2, Math.ceil(total / 2));
+          return exercises.slice(0, count);
+        }
+
+        if (intensity <= 7) {
+          const count = Math.max(3, Math.ceil(total * 0.7));
+          const picked = [];
+
+          for (
+            let index = 0;
+            index < total && picked.length < count;
+            index += 2
+          ) {
+            picked.push(exercises[index]);
+          }
+
+          for (
+            let index = 1;
+            index < total && picked.length < count;
+            index += 2
+          ) {
+            picked.push(exercises[index]);
+          }
+
+          return picked.slice(0, count);
+        }
+
+        return exercises.slice();
+      }
+
+      function formatTime(seconds) {
+        const safeSeconds = Math.max(0, Math.floor(seconds));
+        const minutes = String(Math.floor(safeSeconds / 60)).padStart(2, "0");
+        const remainingSeconds = String(safeSeconds % 60).padStart(2, "0");
+
+        return `${minutes}:${remainingSeconds}`;
+      }
+
+      function clearTimer() {
+        if (timerHandle !== null) {
+          clearInterval(timerHandle);
+          timerHandle = null;
+        }
+      }
+
+      function runCountdown(seconds, runId, onTick, onDone) {
+        clearTimer();
+
+        let remaining = Math.max(0, Math.floor(seconds));
+
+        onTick(remaining);
+
+        timerHandle = setInterval(() => {
+          if (!sessionRunning || runId !== activeRunId) {
+            clearTimer();
+            return;
+          }
+
+          remaining -= 1;
+          onTick(Math.max(0, remaining));
+
+          if (remaining <= 0) {
+            clearTimer();
+            onDone();
+          }
+        }, 1000);
+      }
+
+      function resetToSetup() {
+        activeRunId += 1;
+        sessionRunning = false;
+
+        clearTimer();
+
+        session.classList.remove("active");
+        done.classList.remove("active");
+        setup.style.display = "block";
+
+        phaseEl.textContent = "Exercise";
+        exnameEl.textContent = "";
+        exdescEl.textContent = "";
+        timerEl.textContent = "00:00";
+        progressEl.textContent = "";
+
+        safetyCheck.checked = false;
+        updateStartButton();
+      }
+
+      function finishSession(totalSessionSeconds) {
+        sessionRunning = false;
+        clearTimer();
+
+        addCompletedPractice(totalSessionSeconds);
+
+        session.classList.remove("active");
+        done.classList.add("active");
+
+        updateStartButton();
+      }
+
+      function startSession() {
+        if (!safetyCheck.checked || sessionRunning) {
+          return;
+        }
+
+        applyPath();
+
+        const durationMinutes = parseInt(durationEl.value, 10);
+        const fieldLevel = parseInt(intensityEl.value, 10);
+
+        const chosenExercises = pickExercises(fieldLevel);
+        const totalSessionSeconds = durationMinutes * 60;
+        const numberOfExercises = chosenExercises.length;
+
+        /*
+          The entire selected duration is preserved. Field level changes the
+          work/recovery balance and exercise count, not the total session time.
+        */
+        const restShare =
+          fieldLevel <= 3
+            ? 0.34
+            : fieldLevel <= 7
+              ? 0.24
+              : 0.16;
+
+        const totalRestSeconds = Math.round(
+          totalSessionSeconds *
+          restShare
+        );
+
+        const numberOfRests = Math.max(0, numberOfExercises - 1);
+
+        const restSeconds = numberOfRests > 0
+          ? Math.max(5, Math.floor(totalRestSeconds / numberOfRests))
+          : 0;
+
+        const actualRestTotal = restSeconds * numberOfRests;
+
+        const totalWorkSeconds = Math.max(
+          numberOfExercises * 10,
+          totalSessionSeconds - actualRestTotal
+        );
+
+        const baseWorkSeconds = Math.floor(
+          totalWorkSeconds / numberOfExercises
+        );
+
+        const extraWorkSeconds = totalWorkSeconds % numberOfExercises;
+
+        sessionRunning = true;
+        activeRunId += 1;
+
+        const runId = activeRunId;
+
+        setup.style.display = "none";
+        done.classList.remove("active");
+        session.classList.add("active");
+
+        let exerciseIndex = 0;
+
+        function runExercise() {
+          if (!sessionRunning || runId !== activeRunId) {
+            return;
+          }
+
+          if (exerciseIndex >= chosenExercises.length) {
+            finishSession(totalSessionSeconds);
+            return;
+          }
+
+          const exercise = chosenExercises[exerciseIndex];
+          const workSeconds =
+            baseWorkSeconds +
+            (exerciseIndex < extraWorkSeconds ? 1 : 0);
+
+          phaseEl.textContent =
+            `Move ${exerciseIndex + 1} of ${chosenExercises.length}`;
+
+          exnameEl.textContent = exercise[0];
+          exdescEl.textContent = exercise[1];
+
+          progressEl.textContent = numberOfRests > 0
+            ? `${workSeconds}s · then ${restSeconds}s to rest`
+            : `${workSeconds}s`;
+
+          runCountdown(
+            workSeconds,
+            runId,
+            (remaining) => {
+              timerEl.textContent = formatTime(remaining);
+            },
+            () => {
+              exerciseIndex += 1;
+
+              if (exerciseIndex >= chosenExercises.length) {
+                finishSession(totalSessionSeconds);
+                return;
+              }
+
+              phaseEl.textContent = "Rest";
+              exnameEl.textContent = "Breathe and reset";
+              exdescEl.textContent =
+                "Breathe normally, relax your shoulders, and get ready for the next one — however that looks for you.";
+
+              progressEl.textContent =
+                `${restSeconds}s`;
+
+              runCountdown(
+                restSeconds,
+                runId,
+                (remaining) => {
+                  timerEl.textContent = formatTime(remaining);
+                },
+                runExercise
+              );
+            }
+          );
+        }
+
+        runExercise();
+        updateStartButton();
+      }
+
+      trainingPathEl.addEventListener("change", applyPath);
+
+      intensityEl.addEventListener("input", () => {
+        intensityLabel.textContent = intensityEl.value;
+      });
+
+      safetyCheck.addEventListener("change", updateStartButton);
+
+      startBtn.addEventListener("click", startSession);
+
+      stopBtn.addEventListener("click", resetToSetup);
+
+      restartBtn.addEventListener("click", resetToSetup);
+
+      resetPracticeBtn.addEventListener("click", () => {
+        const approved = window.confirm(
+          "Clear your saved progress on this device? This removes your total time and session count and can't be undone."
+        );
+
+        if (!approved) {
+          return;
+        }
+
+        try {
+          localStorage.removeItem(PRACTICE_STORAGE_KEY);
+        } catch (error) {
+          /* Nothing else is required if storage is unavailable. */
+        }
+
+        renderPracticeRecord();
+      });
+
+      window.addEventListener("pagehide", () => {
+        if (sessionRunning) {
+          resetToSetup();
+        }
+      });
+
+      applyPath();
+      renderPracticeRecord();
+      updateStartButton();
+    })();
+  </script>
+</body>
+</html>
