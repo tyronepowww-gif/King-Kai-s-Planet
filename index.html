@@ -155,10 +155,7 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .check-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+    .safety-line {
       margin-top: 16px;
       padding: 12px;
       border: 1px solid var(--line);
@@ -169,30 +166,17 @@
       line-height: 1.45;
     }
 
-    .check-row input {
-      width: 18px;
-      height: 18px;
-      margin-top: 1px;
-      accent-color: var(--accent);
-      flex: 0 0 auto;
-    }
-
     button {
       width: 100%;
-      min-height: 50px;
+      min-height: 56px;
       margin-top: 14px;
       border: 0;
       border-radius: 12px;
       background: var(--accent);
       color: #1a1400;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 800;
       cursor: pointer;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.4;
     }
 
     button.secondary {
@@ -294,20 +278,6 @@
       color: var(--muted);
       font-size: 0.88rem;
       line-height: 1.55;
-    }
-
-    .glossary dt {
-      margin-top: 10px;
-      color: var(--text);
-      font-weight: 800;
-      font-size: 0.9rem;
-    }
-
-    .glossary dd {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.86rem;
-      line-height: 1.5;
     }
 
     .creative-note {
@@ -427,31 +397,6 @@
       Pick a path, pick a time, and move at whatever pace works for your body today.
     </p>
 
-    <section class="notice" role="note" aria-label="Wellness and fictional interface notice">
-      <h2>Made to work for every body</h2>
-
-      <p>
-        Z Orbit is a free, independent movement and reflection tool — it's not
-        medical advice, a diagnosis, a treatment plan, or a replacement for a
-        doctor, physical therapist, or other qualified professional.
-      </p>
-
-      <p>
-        <strong>There's no such thing as "not enough range of motion" here.</strong>
-        Every move below can be done seated, lying down, one side at a time, in
-        the smallest range that's comfortable, or just imagined and breathed
-        through if that's what today calls for. If you're managing limited
-        mobility, recovering from something, or spending most of your day in
-        bed, this still works — you're not required to match a "full" version
-        of anything. Small and real beats big and forced, every time.
-      </p>
-
-      <p>
-        Pick whatever variation fits you right now, keep clear space if you're
-        moving, and stop if anything feels painful, dizzying, or unsafe.
-      </p>
-    </section>
-
     <section class="panel" id="setup" aria-label="Practice setup">
       <label for="trainingPath">Pick a path</label>
 
@@ -477,7 +422,7 @@
       </select>
 
       <label for="intensity" style="margin-top: 14px">
-        How much do you want packed in? <span id="intensityLabel">5</span> / 10
+        Intensity — <span id="intensityLabel">5</span> / 10
       </label>
 
       <input id="intensity" type="range" min="1" max="10" value="5">
@@ -494,23 +439,35 @@
         </div>
       </div>
 
-      <label class="check-row" for="safetyCheck">
-        <input id="safetyCheck" type="checkbox">
+      <p class="safety-line">
+        Use whatever version fits your body today — smaller, seated, lying
+        down, or just breathing through it — and stop any time it feels
+        painful, dizzy, or unsafe.
+      </p>
 
-        <span>
-          I'll do whatever version of this fits my body today — smaller range,
-          seated, lying down, or just breathing through it — and I'll stop if
-          anything feels painful, dizzying, or unsafe.
-        </span>
-      </label>
-
-      <button id="startBtn" type="button" disabled>
+      <button id="startBtn" type="button">
         Let's go
       </button>
 
       <button id="resetPracticeBtn" class="secondary" type="button">
         Clear my saved progress
       </button>
+    </section>
+
+    <section class="notice" role="note" aria-label="Wellness and fictional interface notice">
+      <h2>Made to work for every body</h2>
+
+      <p>
+        This is a free movement and reflection tool — not medical advice or
+        a substitute for a doctor, physical therapist, or other professional.
+      </p>
+
+      <p>
+        Every move here can be done smaller, seated, lying down, or just
+        imagined — there's no "full" version required. Keep clear space if
+        you're moving, and stop if anything feels painful, dizzying, or
+        unsafe.
+      </p>
     </section>
 
     <section class="session" id="session" aria-live="polite">
@@ -522,8 +479,8 @@
 
       <div class="session-note">
         This is just a game, not a medical or performance measurement. Slow
-        it down, shrink the range, stay seated or lying down, use support, or
-        stop — whatever keeps this feeling okay for you right now.
+        down, shrink the range, sit or lie down, or stop — whatever keeps
+        this feeling okay for you right now.
       </div>
 
       <button id="stopBtn" class="secondary" type="button">
@@ -535,9 +492,8 @@
       <h2>Nice work ◆</h2>
 
       <p>
-        That time is saved to your own private record on this device.
-        Resting counts too — showing up however you could today is the whole
-        point.
+        Saved to your own private record on this device. Showing up however
+        you could today is the whole point.
       </p>
 
       <button id="restartBtn" type="button">
@@ -549,31 +505,15 @@
       <h2>The idea behind this</h2>
 
       <p>
-        Z Orbit treats practice as something you do for yourself, on your own
-        terms — not a test, not a competition. The goal is steadiness and a
-        few more good choices in how you move through your day, not proving
-        anything to anyone.
+        This is practice for yourself, not a test or a competition. Doing
+        less on a hard day isn't giving up — it's accurate. Rest counts too.
       </p>
 
       <p>
-        Doing less on a hard day isn't giving up — it's just accurate. Control
-        beats force, and rest is part of the practice, not a break from it.
-      </p>
-    </section>
-
-    <section class="learning">
-      <h2>Why "range" isn't the point</h2>
-
-      <p>
-        Finished sessions add to your own private time total. That total
-        isn't a ranking or proof of anything — it's just a record that you
-        showed up, in whatever way worked that day.
-      </p>
-
-      <p>
-        The "how much do you want packed in" setting changes how many moves
-        get pulled into a session — it's a game setting, not a measurement of
-        your body or your effort.
+        Your finished-session time is just a private record that you showed
+        up — not a ranking. <strong>Intensity</strong> only changes how many
+        moves get packed into a session; it's not a measure of your body or
+        your effort.
       </p>
     </section>
 
@@ -581,28 +521,17 @@
       <h2>Creative Note</h2>
 
       <p>
-        Z Orbit is a free, independent personal project exploring movement,
-        reflection, discipline, and growth through interactive design.
-      </p>
-
-      <p>
-        Its creator was influenced by stories about training, mentorship,
-        persistence, recovery, and imaginative self-improvement. Dragon Ball was
-        one work that made those themes emotionally meaningful to the creator.
-      </p>
-
-      <p>
-        Z Orbit uses original code, writing, design, and project content. It is
-        not affiliated with, endorsed by, sponsored by, or approved by Dragon Ball,
-        Shueisha, Bird Studio, Toei Animation, or any related rights holder.
+        Z Orbit is an independent personal project exploring movement,
+        discipline, and growth, inspired in part by themes from Dragon Ball.
+        It uses original code, writing, and design, and is not affiliated
+        with, endorsed by, or sponsored by Dragon Ball, Shueisha, Bird
+        Studio, Toei Animation, or any related rights holder.
       </p>
     </section>
 
     <p class="footer-note">
-      Z Orbit stores your total time and session count only in this browser
-      using local storage. No accounts, camera, microphone, uploads,
-      analytics, advertising, or remote data processing — just this page, in
-      this tab.
+      Your time and session count are stored only in this browser — no
+      accounts, camera, microphone, uploads, or tracking.
     </p>
   </main>
 
@@ -790,7 +719,6 @@
       const pageTitle = $("pageTitle");
       const pageSub = $("pageSub");
 
-      const safetyCheck = $("safetyCheck");
       const startBtn = $("startBtn");
       const stopBtn = $("stopBtn");
       const restartBtn = $("restartBtn");
@@ -891,10 +819,6 @@
         pageSub.textContent = path.sub;
       }
 
-      function updateStartButton() {
-        startBtn.disabled = !safetyCheck.checked || sessionRunning;
-      }
-
       function pickExercises(intensity) {
         const total = exercises.length;
 
@@ -982,9 +906,6 @@
         exdescEl.textContent = "";
         timerEl.textContent = "00:00";
         progressEl.textContent = "";
-
-        safetyCheck.checked = false;
-        updateStartButton();
       }
 
       function finishSession(totalSessionSeconds) {
@@ -995,12 +916,10 @@
 
         session.classList.remove("active");
         done.classList.add("active");
-
-        updateStartButton();
       }
 
       function startSession() {
-        if (!safetyCheck.checked || sessionRunning) {
+        if (sessionRunning) {
           return;
         }
 
@@ -1014,7 +933,7 @@
         const numberOfExercises = chosenExercises.length;
 
         /*
-          The entire selected duration is preserved. Field level changes the
+          The entire selected duration is preserved. Intensity changes the
           work/recovery balance and exercise count, not the total session time.
         */
         const restShare =
@@ -1119,7 +1038,6 @@
         }
 
         runExercise();
-        updateStartButton();
       }
 
       trainingPathEl.addEventListener("change", applyPath);
@@ -1127,8 +1045,6 @@
       intensityEl.addEventListener("input", () => {
         intensityLabel.textContent = intensityEl.value;
       });
-
-      safetyCheck.addEventListener("change", updateStartButton);
 
       startBtn.addEventListener("click", startSession);
 
@@ -1162,7 +1078,6 @@
 
       applyPath();
       renderPracticeRecord();
-      updateStartButton();
     })();
   </script>
 <!-- UNIVERSAL LOCAL DATA PORTABILITY — SMALL EXPANDER -->
